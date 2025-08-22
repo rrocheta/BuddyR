@@ -1,6 +1,6 @@
 ﻿namespace BuddyR.Application.Services
 {
-    class MessageService
+    public class MessageService
     {
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace BuddyR.Application.Services
 {
-    class FriendshipService
+    public class FriendshipService
     {
     }
 }

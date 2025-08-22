@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using BuddyR.Application.Services;
+using BuddyR.Domain.Interfaces;
+using BuddyR.Infrastructure.Persistence;
 
 namespace BuddyR.Api
 {
@@ -8,6 +12,11 @@ namespace BuddyR.Api
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("BuddyR"));
+
+            // DI
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<UserService>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

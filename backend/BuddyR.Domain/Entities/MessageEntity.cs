@@ -1,6 +1,6 @@
 ﻿namespace BuddyR.Domain.Entities
 {
-    class MessageEntity
+    public class MessageEntity
     {
     }
 }

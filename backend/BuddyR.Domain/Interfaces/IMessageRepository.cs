@@ -1,6 +1,6 @@
 ﻿namespace BuddyR.Domain.Interfaces
 {
-    interface IMessageRepository
+    public interface IMessageRepository
     {
     }
 }
