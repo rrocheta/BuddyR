@@ -9,6 +9,7 @@ The project is **currently under development** and serves as a showcase of:
 - Google OAuth 2.0
 - Entity Framework Core
 - SignalR for real-time messaging
+- End-to-end message encryption
 - Layered project structure (API, Application, Domain, Infrastructure)
 
 Feedbacks are welcome, but please note that this is **not a production-ready application**.
