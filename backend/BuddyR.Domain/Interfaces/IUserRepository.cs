@@ -8,5 +8,7 @@ namespace BuddyR.Domain.Interfaces
         Task<UserEntity?> GetByEmailAsync(string email);
         Task<UserEntity?> GetByIdAsync(Guid id);
         Task AddAsync (UserEntity entity);
+        Task UpdateAsync (UserEntity entity);
+        Task DeleteAsync (Guid id);
     }
 }

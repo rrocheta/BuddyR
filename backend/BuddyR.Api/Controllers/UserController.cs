@@ -1,5 +1,6 @@
 ﻿using BuddyR.Api.DTOs;
 using BuddyR.Application.Services;
+using BuddyR.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BuddyR.Api.Controllers
@@ -86,6 +87,52 @@ namespace BuddyR.Api.Controllers
             catch (InvalidOperationException ex)
             {
                 return Conflict(ex.Message);
+            }
+        }
+
+        [HttpPatch("{id:guid}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] UserDto dto)
+        {
+            var entity = new UserEntity
+            {
+                Id = id,
+                Name = dto.Name,
+                Email = dto.Email,
+            };
+
+            try
+            {
+                var updatedUser = await _userService.UpdateAsync(entity);
+                if (updatedUser == null)
+                    return NotFound();
+
+                var result = new UserDto
+                {
+                    Id = updatedUser.Id,
+                    Name = updatedUser.Name,
+                    Email = updatedUser.Email,
+                };
+
+                return Ok(result);
+            }
+            catch (InvalidOperationException)
+            {
+                return NotFound();
+            }
+
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            try
+            {
+                await _userService.DeleteAsync(id);
+                return Ok();
+            }
+            catch (InvalidOperationException)
+            {
+                return NotFound();
             }
         }
 

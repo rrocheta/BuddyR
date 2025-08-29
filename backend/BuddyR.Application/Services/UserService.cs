@@ -36,11 +36,12 @@ namespace BuddyR.Application.Services
 
         public async Task<UserEntity> CreateAsync(string name, string email)
         {
-            if (string.IsNullOrWhiteSpace(email))
-                throw new ArgumentException("Email is required");
 
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Name is required");
+
+            if (string.IsNullOrWhiteSpace(email))
+                throw new ArgumentException("Email is required");
 
             var existingUser = await _userRepository.GetByEmailAsync(email);
             if (existingUser != null)
@@ -56,5 +57,31 @@ namespace BuddyR.Application.Services
             await _userRepository.AddAsync(user);
             return user;
         }
+
+        public async Task<UserEntity> UpdateAsync(UserEntity entity)
+        {
+            var user = await _userRepository.GetByIdAsync(entity.Id);
+            if (user == null)
+                throw new InvalidOperationException("User not found");
+
+            if (!string.IsNullOrWhiteSpace(entity.Name))
+                user.Name = entity.Name;
+            if (!string.IsNullOrWhiteSpace(entity.Email))
+                user.Email = entity.Email;
+
+            await _userRepository.UpdateAsync(user);
+
+            return user;
+        }
+
+        public async Task DeleteAsync(Guid id)
+        {
+            var user = await _userRepository.GetByIdAsync(id);
+            if (user == null)
+                throw new InvalidOperationException("User not found");
+
+            await _userRepository.DeleteAsync(id);
+        }
+
     }
 }
