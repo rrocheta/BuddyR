@@ -13,6 +13,11 @@ namespace BuddyR.Infrastructure.Persistence
             _context = context;
         }
 
+        public async Task<List<UserEntity>> GetAllUsersAsync()
+        {
+            return await _context.Users.ToListAsync();
+        }
+
         public async Task<UserEntity?> GetByEmailAsync(string email)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);

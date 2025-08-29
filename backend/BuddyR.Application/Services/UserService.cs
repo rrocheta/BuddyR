@@ -12,13 +12,29 @@ namespace BuddyR.Application.Services
             _userRepository = userRepository;
         }
 
+        public async Task<List<UserEntity>> GetAllUsersAsync()
+          => await _userRepository.GetAllUsersAsync();
+
+
         public Task<UserEntity?> GetByIdAsync(Guid id)
-            => _userRepository.GetByIdAsync(id);
+        {
+            if (id == Guid.Empty)
+                throw new ArgumentNullException("Invalid user id");
+
+            return _userRepository.GetByIdAsync(id);
+        }
 
         public Task<UserEntity?> GetByEmailAsync(string email)
-            => _userRepository.GetByEmailAsync(email);
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                throw new ArgumentNullException("Email is required");
+            }
 
-        public async Task<UserEntity> CreateAsync(string email, string name)
+            return _userRepository.GetByEmailAsync(email);
+        }
+
+        public async Task<UserEntity> CreateAsync(string name, string email)
         {
             if (string.IsNullOrWhiteSpace(email))
                 throw new ArgumentException("Email is required");
@@ -30,10 +46,10 @@ namespace BuddyR.Application.Services
             if (existingUser != null)
                 throw new InvalidOperationException("User with this email already exists");
 
-            var user = new UserEntity() 
-            { 
-                Email = email,
+            var user = new UserEntity()
+            {
                 Name = name,
+                Email = email,
                 PasswordHash = "placeholder"   // TODO later
             };
 
